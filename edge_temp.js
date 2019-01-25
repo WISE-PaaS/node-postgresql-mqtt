@@ -1,13 +1,13 @@
 const mqtt = require('mqtt')
 
 // Direct link
-const mqttUri = 'mqtt://eb869bc9-31f7-46dd-928b-4c6e08a65302:7a42b6be-d0a9-4227-b7c0-85e8636591be:WaWLv7UfNv3ngrNb2YZkmgccI@wise-msghub.eastasia.cloudapp.azure.com:1883';
-const connectOpts = {
-  host: 'wise-msghub.eastasia.cloudapp.azure.com',
-  port: 1883,
-  username: 'eb869bc9-31f7-46dd-928b-4c6e08a65302:7a42b6be-d0a9-4227-b7c0-85e8636591be',
-  password: 'WaWLv7UfNv3ngrNb2YZkmgccI'
-};
+const mqttUri = 'mqtt://eb869bc9-31f7-46dd-928b-4c6e08a65302%3Ae19bd03d-b603-4c24-8a87-8bf58e25a2fa:1pJ8AKYJiNkWtvJUtEoTOmapu@wise-msghub.eastasia.cloudapp.azure.com:1883';
+// const connectOpts = {
+//   host: 'wise-msghub.eastasia.cloudapp.azure.com',
+//   port: 1883,
+//   username: 'eb869bc9-31f7-46dd-928b-4c6e08a65302:7a42b6be-d0a9-4227-b7c0-85e8636591be',
+//   password: 'WaWLv7UfNv3ngrNb2YZkmgccI'
+// };
 
 // Use mqttUri or connectOpts
 var client = mqtt.connect(mqttUri);

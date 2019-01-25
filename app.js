@@ -1,3 +1,8 @@
+/*
+Branch :: master
+-- master branch is synchronized with the GitHub repo.
+*/
+
 const express = require('express');
 const mqtt = require('mqtt');
 const moment = require('moment');
@@ -6,35 +11,24 @@ const app = express();
 
 const numOfTempsReturned = 30;
 
-// ----- Local DB
+// ----- Remote DB --- Get env variables
+const vcap_services = JSON.parse(process.env.VCAP_SERVICES);
+const host = vcap_services.postgresql[0].credentials.host;
+const user = vcap_services.postgresql[0].credentials.username;
+const password = vcap_services.postgresql[0].credentials.password;
+const dbPort = vcap_services.postgresql[0].credentials.port;
+const database = vcap_services.postgresql[0].credentials.database;
+
 const pool = new Pool({
-  host: 'localhost',
-  user: 'postgres',
-  password: '1234',
-  port: 5432,
-  database: 'home_data',
+  host: host,
+  user: user,
+  password: password,
+  port: dbPort,
+  database: database,
   max: 3,
   idleTimeoutMillis: 5000,
   connectionTimeoutMillis: 2000
 });
-
-// ----- Remote DB --- Get env variables
-// const vcap_services = JSON.parse(process.env.VCAP_SERVICES);
-// const host = vcap_services.postgresql[0].credentials.host;
-// const user = vcap_services.postgresql[0].credentials.username;
-// const password = vcap_services.postgresql[0].credentials.password;
-// const dbPort = vcap_services.postgresql[0].credentials.port;
-// const database = vcap_services.postgresql[0].credentials.database;
-// const pool = new Pool({
-//   host: host,
-//   user: user,
-//   password: password,
-//   port: dbPort,
-//   database: database,
-//   max: 3,
-//   idleTimeoutMillis: 5000,
-//   connectionTimeoutMillis: 2000
-// });
 
 // SQL commands for creating table for storing data
 const queryString = `
@@ -81,11 +75,8 @@ app.get('/temps', (req, res) => {
   pool.query(queryString)  // No need to connect
     .then(result => {
       res.setHeader('Access-Control-Allow-Origin', '*');
-      // res.setHeader('X-Content-Type-Options', 'nosniff');
-      // res.setHeader('Content-Type', 'application/json');
-
       // Format timestamp
-      result.rows.map((row) => {
+      result.rows.map(row => {
         row.timestamp = moment(row.timestamp).format('MM-DD HH:mm:ss');
       });
       res.send({ temperatures: result.rows });
@@ -95,18 +86,10 @@ app.get('/temps', (req, res) => {
 });
 
 // -- Get env variables for rabbitmq service
-// const vcapServices = JSON.parse(process.env.VCAP_SERVICES);
-// const mqttUri = vcapServices['p-rabbitmq'][0].credentials.protocols.mqtt.uri
+const vcapServices = JSON.parse(process.env.VCAP_SERVICES);
+const mqttUri = vcapServices['p-rabbitmq'][0].credentials.protocols.mqtt.uri
 
-// -- Direct link
-const connectOpts = {
-  host: 'wise-msghub.eastasia.cloudapp.azure.com',
-  port: 1883,
-  username: 'eb869bc9-31f7-46dd-928b-4c6e08a65302:7a42b6be-d0a9-4227-b7c0-85e8636591be',
-  password: 'WaWLv7UfNv3ngrNb2YZkmgccI'
-};
-
-var client = mqtt.connect(connectOpts);
+var client = mqtt.connect(mqttUri);
 
 // Subscribe
 client.on('connect', (connack) => {
