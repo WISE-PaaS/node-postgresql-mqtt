@@ -1,5 +1,5 @@
 {
-  "name": "mqtt-postgresql-chart",
+  "name": "node-postgresql-mqtt",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
