@@ -2,3 +2,5 @@ node_modules/
 wise-paas-env.txt
 wise-paas-env-no-service.txt
 test.js
+env.json
+test_momemt.js

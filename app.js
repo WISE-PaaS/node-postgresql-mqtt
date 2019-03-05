@@ -89,7 +89,7 @@ app.get('/temps', (req, res) => {
 const vcapServices = JSON.parse(process.env.VCAP_SERVICES);
 const mqttUri = vcapServices['p-rabbitmq'][0].credentials.protocols.mqtt.uri
 
-var client = mqtt.connect(mqttUri);
+const client = mqtt.connect(mqttUri);
 
 // Subscribe
 client.on('connect', (connack) => {

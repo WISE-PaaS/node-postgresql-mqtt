@@ -1,7 +1,8 @@
 const mqtt = require('mqtt')
 
 // Direct link
-const mqttUri = 'mqtt://eb869bc9-31f7-46dd-928b-4c6e08a65302%3Ae19bd03d-b603-4c24-8a87-8bf58e25a2fa:1pJ8AKYJiNkWtvJUtEoTOmapu@wise-msghub.eastasia.cloudapp.azure.com:1883';
+// const mqttUri = 'mqtt://eb869bc9-31f7-46dd-928b-4c6e08a65302%3Ae19bd03d-b603-4c24-8a87-8bf58e25a2fa:1pJ8AKYJiNkWtvJUtEoTOmapu@wise-msghub.eastasia.cloudapp.azure.com:1883';
+const mqttUri = 'mqtt://eb869bc9-31f7-46dd-928b-4c6e08a65302%3A34341485-7f96-4eca-a93b-397a6ec23fbe:AxFiXoqYCZwJqRooDYFUWrK2D@wise-msghub.eastasia.cloudapp.azure.com:1883';
 // const connectOpts = {
 //   host: 'wise-msghub.eastasia.cloudapp.azure.com',
 //   port: 1883,
@@ -10,7 +11,7 @@ const mqttUri = 'mqtt://eb869bc9-31f7-46dd-928b-4c6e08a65302%3Ae19bd03d-b603-4c2
 // };
 
 // Use mqttUri or connectOpts
-var client = mqtt.connect(mqttUri);
+const client = mqtt.connect(mqttUri);
 
 client.on('connect', (connack) => {
   setInterval(() => {
