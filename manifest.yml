@@ -1,8 +1,8 @@
 ---
 applications:   
 - name: api-iot-home-demo-1.0.0
-  memory: 256M
-  disk_quota: 512M
+  memory: 128M
+  disk_quota: 128M
   instances: 1
   buildpack: NodeJS_v1-6-24
   health-check-type: http

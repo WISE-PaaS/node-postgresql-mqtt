@@ -13,11 +13,11 @@ const numOfTempsReturned = 30;
 
 // ----- Remote DB --- Get env variables
 const vcap_services = JSON.parse(process.env.VCAP_SERVICES);
-const host = vcap_services.postgresql[0].credentials.host;
-const user = vcap_services.postgresql[0].credentials.username;
-const password = vcap_services.postgresql[0].credentials.password;
-const dbPort = vcap_services.postgresql[0].credentials.port;
-const database = vcap_services.postgresql[0].credentials.database;
+const host = vcap_services['postgresql-innoworks'][0].credentials.host;
+const user = vcap_services['postgresql-innoworks'][0].credentials.username;
+const password = vcap_services['postgresql-innoworks'][0].credentials.password;
+const dbPort = vcap_services['postgresql-innoworks'][0].credentials.port;
+const database = vcap_services['postgresql-innoworks'][0].credentials.database;
 
 const pool = new Pool({
   host: host,
@@ -87,7 +87,7 @@ app.get('/temps', (req, res) => {
 
 // -- Get env variables for rabbitmq service
 const vcapServices = JSON.parse(process.env.VCAP_SERVICES);
-const mqttUri = vcapServices['p-rabbitmq'][0].credentials.protocols.mqtt.uri
+const mqttUri = vcapServices['p-rabbitmq-innoworks'][0].credentials.protocols.mqtt.uri
 
 const client = mqtt.connect(mqttUri);
 
